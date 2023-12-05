@@ -22,6 +22,9 @@ public struct Configuration {
 
     /// The style to use when indenting Swift source code.
     public let indentation: IndentationStyle
+    
+    /// The style to use when dealing with empty lines.
+    public let emptyLineStyle: EmptyLineAlignmentStyle
 
     /// The threshold for the number of warnings to tolerate before treating the lint as having failed.
     public let warningThreshold: Int?
@@ -69,6 +72,7 @@ public struct Configuration {
         includedPaths: [String],
         excludedPaths: [String],
         indentation: IndentationStyle,
+        emptyLineStyle: EmptyLineAlignmentStyle,
         warningThreshold: Int?,
         reporter: String,
         cachePath: String?,
@@ -80,6 +84,7 @@ public struct Configuration {
         self.includedPaths = includedPaths
         self.excludedPaths = excludedPaths
         self.indentation = indentation
+        self.emptyLineStyle = emptyLineStyle
         self.warningThreshold = warningThreshold
         self.reporter = reporter
         self.cachePath = cachePath
@@ -96,6 +101,7 @@ public struct Configuration {
         includedPaths = configuration.includedPaths
         excludedPaths = configuration.excludedPaths
         indentation = configuration.indentation
+        emptyLineStyle = configuration.emptyLineStyle
         warningThreshold = configuration.warningThreshold
         reporter = configuration.reporter
         basedOnCustomConfigurationFiles = configuration.basedOnCustomConfigurationFiles
@@ -117,6 +123,7 @@ public struct Configuration {
     /// - parameter includedPaths:          Included paths to lint.
     /// - parameter excludedPaths:          Excluded paths to not lint.
     /// - parameter indentation:            The style to use when indenting Swift source code.
+    /// - parameter emptyLineStyle:         The style to use when aligning empty lines of Swift source code.
     /// - parameter warningThreshold:       The threshold for the number of warnings to tolerate before treating the
     ///                                     lint as having failed.
     /// - parameter reporter:               The identifier for the `Reporter` to use to report style violations.
@@ -133,6 +140,7 @@ public struct Configuration {
         includedPaths: [String] = [],
         excludedPaths: [String] = [],
         indentation: IndentationStyle = .default,
+        emptyLineStyle: EmptyLineAlignmentStyle = .default,
         warningThreshold: Int? = nil,
         reporter: String? = nil,
         cachePath: String? = nil,
@@ -160,6 +168,7 @@ public struct Configuration {
             includedPaths: includedPaths,
             excludedPaths: excludedPaths,
             indentation: indentation,
+            emptyLineStyle: emptyLineStyle,
             warningThreshold: warningThreshold,
             reporter: reporter ?? XcodeReporter.identifier,
             cachePath: cachePath,
@@ -265,6 +274,7 @@ extension Configuration: Hashable {
         hasher.combine(includedPaths)
         hasher.combine(excludedPaths)
         hasher.combine(indentation)
+        hasher.combine(emptyLineStyle)
         hasher.combine(warningThreshold)
         hasher.combine(reporter)
         hasher.combine(allowZeroLintableFiles)
@@ -279,6 +289,7 @@ extension Configuration: Hashable {
         return lhs.includedPaths == rhs.includedPaths &&
             lhs.excludedPaths == rhs.excludedPaths &&
             lhs.indentation == rhs.indentation &&
+            lhs.emptyLineStyle == rhs.emptyLineStyle &&
             lhs.warningThreshold == rhs.warningThreshold &&
             lhs.reporter == rhs.reporter &&
             lhs.basedOnCustomConfigurationFiles == rhs.basedOnCustomConfigurationFiles &&
@@ -295,6 +306,7 @@ extension Configuration: CustomStringConvertible {
     public var description: String {
         return "Configuration: \n"
             + "- Indentation Style: \(indentation)\n"
+            + "- Empty Line Alignment Style: \(emptyLineStyle)\n"
             + "- Included Paths: \(includedPaths)\n"
             + "- Excluded Paths: \(excludedPaths)\n"
             + "- Warning Threshold: \(warningThreshold as Optional)\n"

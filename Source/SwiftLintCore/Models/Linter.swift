@@ -306,10 +306,12 @@ public struct CollectedLinter {
 
     /// Formats the file associated with this linter.
     ///
-    /// - parameter useTabs:     Should the file be formatted using tabs?
-    /// - parameter indentWidth: How many spaces should be used per indentation level.
-    public func format(useTabs: Bool, indentWidth: Int) {
+    /// - parameter useTabs:        Should the file be formatted using tabs?
+    /// - parameter trimEmptyLines: Should the files remove whitespaces on empty lines? If false, will align whitespaces with scope.
+    /// - parameter indentWidth:    How many spaces should be used per indentation level.
+    public func format(useTabs: Bool, trimEmptyLines: Bool, indentWidth: Int) {
         let formattedContents = try? file.file.format(trimmingTrailingWhitespace: true,
+                                                      ignoringEmptyLines: !trimEmptyLines,
                                                       useTabs: useTabs,
                                                       indentWidth: indentWidth)
         if let formattedContents {

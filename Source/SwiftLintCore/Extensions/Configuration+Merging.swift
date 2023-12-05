@@ -22,6 +22,7 @@ extension Configuration {
             includedPaths: mergedIncludedAndExcluded.includedPaths,
             excludedPaths: mergedIncludedAndExcluded.excludedPaths,
             indentation: childConfiguration.indentation,
+            emptyLineStyle: childConfiguration.emptyLineStyle,
             warningThreshold: mergedWarningTreshold(with: childConfiguration),
             reporter: reporter,
             cachePath: cachePath,

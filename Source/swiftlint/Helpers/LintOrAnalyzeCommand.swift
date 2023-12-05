@@ -187,11 +187,12 @@ struct LintOrAnalyzeCommand {
         let files = try await configuration
             .visitLintableFiles(options: options, cache: nil, storage: storage) { linter in
                 if options.format {
+                    let trimEmptyLines = configuration.emptyLineStyle.shouldTrimWhitespaces
                     switch configuration.indentation {
                     case .tabs:
-                        linter.format(useTabs: true, indentWidth: 4)
+                        linter.format(useTabs: true, trimEmptyLines: trimEmptyLines, indentWidth: 4)
                     case .spaces(let count):
-                        linter.format(useTabs: false, indentWidth: count)
+                        linter.format(useTabs: false, trimEmptyLines: trimEmptyLines, indentWidth: count)
                     }
                 }
 
